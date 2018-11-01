@@ -1,0 +1,68 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+            table {
+                border-spacing: 15px;
+                border-collapse: collapse;
+            }
+            td,th{
+            }
+
+
+        </style>
+
+    </head>
+
+    <body style="background-color:#00BFFF;">
+        <div class="form-group">
+            <h1 align="center" style="background-color:rgb(66, 144, 107);">Pendaftaran Pasien</h1>
+            <form onsubmit="return make_json(this);" style="border:1px solid #ccc" method="POST">
+                <table>
+                    <tr><td>NIK</td> <td>:</td> <td><input type="text" name="nik" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>Nama</td> <td>:</td> <td><input type="text" name="nama" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>Alamat</td> <td>:</td> <td><input type="text" name="alamat" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>Tanggal Lahir</td> <td>:</td><td>&nbsp &nbsp<input style=" width:90%;" type="date" name="tanggalLahir" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>Kelamin</td> <td>:</td> <td><input type="text" name="kelamin" value=""/></td></tr><tr><td> <br> </td></tr>
+                </table>
+
+                <input type="submit" value="Tambah"/>
+            </form>
+            <pre id="berhasil">
+
+            </pre>
+        <script>
+            function make_json(form) {
+                var json = {
+                    "noRm": form.nik.value,
+                    "nama": form.nama.value,
+                    "alamat": form.alamat.value,
+                    "nik": form.nik.value,
+                    "tanggalLahir": form.tanggalLahir.value,
+                    "kelamin": form.kelamin.value
+
+                };
+                var html = JSON.stringify(json, 0, 100);
+                
+                var Url = "http://202.94.83.190:8080/165314016_maps/webresources/Pasien/addPasien";
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', Url, false);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(html);
+
+                document.getElementById("berhasil").innerHTML = "Pendaftaran Berhasil";
+                return false;
+            }
+
+        </script> 
+
+    </div>
+
+</body>
+</html>

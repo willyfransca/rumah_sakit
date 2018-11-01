@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="background-color:#00BFFF;">
+        <div class="form-group">
+            <p>
+                <strong>Data Klinik</strong>
+                <br/>
+            </p>
+
+            <div class="contact-form">
+                <button type="button" onclick="loadDoc()" id="myselect">Cari</button>
+                
+                <p id="demo"></p>
+
+                <script>
+                    function loadDoc() {
+
+                        var xmlhttp = new XMLHttpRequest();
+                        var url = "http://202.94.83.190:8080/165314016_maps/webresources/klinik/";
+
+                        xmlhttp.onreadystatechange=function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                myFunction(this.responseText);
+                            }
+                        }
+                        xmlhttp.open("GET", url, true);
+                        xmlhttp.send();
+
+                        function myFunction(response) {
+                            var arr = JSON.parse(response);
+                            var i;
+                            var out = "<table border='1'> <tr><td>Id Klinik</td><td>Nama</td><td>spesialis</td></tr>";
+
+                            for(i = 0; i < arr.length; i++) {
+                                out += "<tr><td>" + 
+                                    arr[i].idKlinik +
+                                    "</td><td>" +
+                                    arr[i].nama +
+                                    "</td><td>"+arr[i].spesialis+"</tr>";
+                            }
+                            out += "</table>";
+                            document.getElementById("demo").innerHTML = out;
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </body>
+</html>
