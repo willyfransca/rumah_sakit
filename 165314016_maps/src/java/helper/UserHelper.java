@@ -4,6 +4,7 @@
  */
 package helper;
 
+import java.util.Collections;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -52,4 +53,33 @@ public class UserHelper {
             return null;
         }
     }
+
+    public List<User> getAllUser() {
+        List<User> result = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        String query = "from User u";
+        Query q = session.createQuery(query);
+        result = q.list();
+        session.close();
+        return result;
+    }
+
+    public User getUser(String username, String password) {
+        List<User> List = this.getAllUser();
+        Collections.sort(List);
+        User user = new User(username, password);
+        int index = Collections.binarySearch(List, user);
+        if (index < 0) {
+            return null;
+        } else {
+            User result = List.get(index);
+            if (user.getPassword().equals(result.getPassword())) {
+                System.out.println("Password: " + password);
+                return user;
+            } else {
+                return null;
+            }
+        }
+    }
 }
+

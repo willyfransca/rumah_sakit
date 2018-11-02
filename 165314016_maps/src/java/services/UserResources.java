@@ -83,4 +83,20 @@ public class UserResources {
                 .header("Access-Preflight-Maxage", "2")
                 .build();
     }
+    
+     
+    @GET
+    @Path("login1")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLogin( @QueryParam("email") String email, 
+            @QueryParam("password") String password){
+        UserHelper helper = new UserHelper();
+        User  user = helper.getUser(email, password);
+        Gson gson = new Gson();
+        
+       return Response
+               .status(200)
+               .entity(gson.toJson(user))
+               .build();
+    }
 }
