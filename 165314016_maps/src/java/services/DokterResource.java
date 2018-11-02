@@ -12,10 +12,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import pojos.Dokter;
 
 /**
  * REST Web Service
@@ -36,16 +38,17 @@ public class DokterResource {
 
     /**
      * Retrieves representation of an instance of services.DokterResource
+     *
      * @return an instance of java.lang.String
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
         //TODO return proper representation object
-      dokterHelper k = new dokterHelper();
+        dokterHelper k = new dokterHelper();
         Gson g = new Gson();
-                return Response.status(Response.Status.OK)
-       .entity(g.toJson(k.bacaSemuaDokter()))
+        return Response.status(Response.Status.OK)
+                .entity(g.toJson(k.bacaSemuaDokter()))
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods",
                         "GET,POST,HEAD,OPTIONS,PUT")
@@ -58,15 +61,32 @@ public class DokterResource {
                 .header("Access-Control-Max-Age", "20")
                 .header("Access-Preflight-Maxage", "20")
                 .build();
-        
+
     }
 
     /**
      * PUT method for updating or creating an instance of DokterResource
+     *
      * @param content representation for the resource
      */
-    @PUT
+//    @PUT
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public void putJson(String content) {
+//    }
+    @POST
+    @Path("addDokter")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    public Response addNewDokter(String data) {
+        Gson gson = new Gson();
+        Dokter dokter = gson.fromJson(data, Dokter.class);
+        dokterHelper helper = new dokterHelper();
+        helper.addNewDokter(
+                dokter.getNama(),
+                dokter.getSpesialis());
+
+        return Response
+                .status(200)
+                .entity(dokter)
+                .build();
     }
 }

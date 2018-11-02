@@ -27,5 +27,15 @@ public class dokterHelper {
         session.close();
         return list;
     }
+    
+    public void addNewDokter(String nama, String spesialis) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        Transaction transaction = session.beginTransaction();
+        Dokter dokter = new Dokter(nama, spesialis);
+        session.saveOrUpdate(dokter);
+        transaction.commit();
+        session.close();
+    }
    
 }

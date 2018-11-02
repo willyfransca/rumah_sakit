@@ -10,9 +10,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import pojos.Klinik;
 
 /**
  * REST Web Service
@@ -57,8 +60,26 @@ public class KlinikResource {
      * PUT method for updating or creating an instance of lokasiResource
      * @param content representation for the resource
      */
-    @PUT
-    @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+//    @PUT
+//    @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+//    public void putJson(String content) {
+//    }
+    
+    
+    @POST
+    @Path("addKlinik")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewKlinik(String data) {
+        Gson gson = new Gson();
+        Klinik klinik = gson.fromJson(data, Klinik.class);
+        klinikHelper helper = new klinikHelper();
+        helper.addNewKlinik(
+                klinik.getIdKlinik(),
+                klinik.getNama(),
+                klinik.getSpesialis());
+        return Response
+                .status(200)
+                .entity(klinik)
+                .build();
     }
 }

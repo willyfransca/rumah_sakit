@@ -26,4 +26,15 @@ public class klinikHelper {
         session.close();
         return list;
     }
+    
+    
+    public void addNewKlinik(String id, String nama, String spesialis) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        Transaction transaction = session.beginTransaction();
+        Klinik klinik = new Klinik(id, nama, spesialis);
+        session.saveOrUpdate(klinik);
+        transaction.commit();
+        session.close();
+    }
 }
