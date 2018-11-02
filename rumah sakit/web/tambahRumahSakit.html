@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="background-color:#00BFFF;">
+        <div class="form-group">
+            <h1 align="center" style="background-color:rgb(66, 144, 107);">Tambah Klinik</h1>
+            <form onsubmit="return make_json(this);" style="border:1px solid #ccc" method="POST">
+                <table>
+                    <tr><td>Latitude</td> <td>:</td> <td><input type="text" name="lat" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>Longitude</td> <td>:</td> <td><input type="text" name="lng" value=""/></td></tr><tr><td> <br> </td></tr>
+                    <tr><td>nama</td> <td>:</td> <td><input type="text" name="nama" value=""/></td></tr><tr><td> <br> </td></tr>
+
+                </table>
+
+                <input type="submit" value="Tambah"/>
+            </form>
+            <pre id="berhasil">
+
+            </pre>
+
+            <script>
+                function make_json(form) {
+                    var json = {
+                        "lat": form.lat.value,
+                        "lng": form.lng.value,
+                        "nama": form.nama.value
+                    };
+                    var html = JSON.stringify(json, 0, 100);
+
+                    var Url = "http://202.94.83.190:8080/165314016_maps/webresources/lokasi/addLokasi";
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', Url, false);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.send(html);
+
+                    document.getElementById("berhasil").innerHTML = "Pendaftaran Berhasil";
+                    return false;
+                }
+            </script>
+        </div>
+
+
+
+
+    </body>
+</html>
