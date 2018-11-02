@@ -32,5 +32,15 @@ public class lokasiHelper {
         return list;
 
     }
+    
+    public void addNewLokasi(Double lat, Double lng, String name) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        
+        Transaction transaction = session.beginTransaction();
+        Location lokasi = new Location(lat, lng, name);
+        session.saveOrUpdate(lokasi);
+        transaction.commit();
+        session.close();
+    }
 
 }

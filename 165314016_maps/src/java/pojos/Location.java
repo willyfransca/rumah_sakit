@@ -20,6 +20,14 @@ public class Location implements java.io.Serializable {
         this.name = name;
     }
 
+    public Location(Long id, Double lat, Double lng, String name) {
+        this.id = id;
+        this.lat = lat;
+        this.lng = lng;
+        this.name = name;
+    }
+    
+
     public Long getId() {
         return this.id;
     }

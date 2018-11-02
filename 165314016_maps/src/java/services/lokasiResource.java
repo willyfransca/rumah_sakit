@@ -12,9 +12,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import pojos.Location;
 
 /**
  * REST Web Service
@@ -63,8 +66,26 @@ public class lokasiResource {
      * PUT method for updating or creating an instance of lokasiResource
      * @param content representation for the resource
      */
-    @PUT
-    @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+//    @PUT
+//    @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+//    public void putJson(String content) {
+//    }
+    
+    @POST
+    @Path("addLokasi")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewLokasi(String data) {
+        Gson gson = new Gson();
+        Location lokasi = gson.fromJson(data, Location.class);
+        lokasiHelper helper = new lokasiHelper();
+        helper.addNewLokasi(
+                lokasi.getLat(),
+                lokasi.getLng(),
+                lokasi.getName());
+
+        return Response
+                .status(200)
+                .entity(lokasi)
+                .build();
     }
 }
