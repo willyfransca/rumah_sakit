@@ -12,7 +12,23 @@ and open the template in the editor.
     </head>
     <body>
        <body style="background-color:#00BFFF;">
-        <div class="form-group">
+        
+           <div class="form-group">
+        <h1 align="center" style="background-color:rgb(66, 144, 107);">Tambah Dokter</h1>
+        <form onsubmit="return make_json(this);" style="border:1px solid #ccc" method="POST">
+            <table>
+                <tr><td>Nama</td> <td>:</td> <td><input type="text" name="nama" value=""/></td></tr><tr><td> <br> </td></tr>
+                <tr><td>Spesialis</td> <td>:</td> <td><input type="text" name="spesialis" value=""/></td></tr><tr><td> <br> </td></tr>
+
+            </table>
+
+            <input type="submit" value="Tambah"/>
+        </form>
+        <pre id="berhasil">
+
+        </pre></div>
+           
+           <div class="form-group">
             <p>
                 <strong>Daftar Dokter</strong>
                 <br/>
@@ -52,6 +68,24 @@ and open the template in the editor.
                             out += "</table>";
                             document.getElementById("demo").innerHTML = out;
                         }
+                    }
+                    
+                    
+                     function make_json(form) {
+                        var json = {
+                            "nama": form.nama.value,
+                            "spesialis": form.spesialis.value
+                        };
+                        var html = JSON.stringify(json, 0, 100);
+
+                        var Url = "http://202.94.83.190:8080/165314016_maps/webresources/dokter/addDokter";
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', Url, false);
+                        xhr.setRequestHeader("Content-type", "application/json");
+                        xhr.send(html);
+
+                        document.getElementById("berhasil").innerHTML = "Pendaftaran Berhasil";
+                        return false;
                     }
                 </script>
             </div>
