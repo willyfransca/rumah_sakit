@@ -16,6 +16,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import pojos.Pasien;
@@ -41,6 +42,9 @@ public class PasienResource {
      * Retrieves representation of an instance of services.PasienResource
      * @return an instance of java.lang.String
      */
+    
+    
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
@@ -59,6 +63,33 @@ public class PasienResource {
                         "true")
                 .header("Access-Control-Max-Age", "20")
                 .header("Access-Preflight-Maxage", "20")
+                .build();
+    }
+    
+    
+    @GET
+    @Path("cariPasien")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response Login(
+            @QueryParam("noRm") String noRm){
+        pasienHelper helper = new pasienHelper();
+        Pasien hasil = helper.cariUser(noRm);
+//        boolean hasil = helper.login(email, password);
+        Gson gson = new Gson();
+        
+         return Response.status(200)
+                .entity(gson.toJson(hasil))
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods",
+                        "GET,POST,HEAD,OPTIONS,PUT")
+                .header("Access-Control-Allow-Headers",
+                        "Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers")
+                .header("Access-Exposed-Headers",
+                        "Access-Control-Allow-Origin,Access-Control-Allow-Credentials")
+                .header("Access-Support-Credentials",
+                        "true")
+                .header("Access-Control-Max-Age","2")
+                .header("Access-Preflight-Maxage", "2")
                 .build();
     }
 
@@ -91,4 +122,7 @@ public class PasienResource {
                         .entity(pasien)
                         .build();
     }
+    
+    
+    
 }
