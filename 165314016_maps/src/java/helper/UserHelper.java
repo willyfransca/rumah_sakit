@@ -55,31 +55,25 @@ public class UserHelper {
     }
 
     public List<User> getAllUser() {
-        List<User> result = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        String query = "from User u";
-        Query q = session.createQuery(query);
-        result = q.list();
+        Transaction tx = session.beginTransaction();
+        List<User> hasil = null;
+        Query q = session.createQuery("from User u");
+        hasil = q.list();
+        tx.commit();
         session.close();
-        return result;
+        return hasil;
     }
 
-    public User getUser(String username, String password) {
-        List<User> List = this.getAllUser();
-        Collections.sort(List);
-        User user = new User(username, password);
-        int index = Collections.binarySearch(List, user);
-        if (index < 0) {
-            return null;
-        } else {
-            User result = List.get(index);
-            if (user.getPassword().equals(result.getPassword())) {
-                System.out.println("Password: " + password);
-                return user;
-            } else {
-                return null;
-            }
-        }
+     public User login1(String email,String password){
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        String q = "From User a where a.email=:email AND a.password =:password";
+        
+        Query query = session.createQuery(q);
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        
+        return (User) query.uniqueResult();
     }
 }
 

@@ -12,6 +12,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
@@ -41,10 +42,10 @@ public class UserResources {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
+    @Path("login1")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getJson(@QueryParam("email") String email, @QueryParam("password") String password) {
+        return new Gson().toJson(new UserHelper().login1(email, password));
     }
 
     /**
@@ -82,21 +83,5 @@ public class UserResources {
                 .header("Access-Control-Max-Age","2")
                 .header("Access-Preflight-Maxage", "2")
                 .build();
-    }
-    
-     
-    @GET
-    @Path("login1")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getLogin( @QueryParam("email") String email, 
-            @QueryParam("password") String password){
-        UserHelper helper = new UserHelper();
-        User  user = helper.getUser(email, password);
-        Gson gson = new Gson();
-        
-       return Response
-               .status(200)
-               .entity(gson.toJson(user))
-               .build();
     }
 }

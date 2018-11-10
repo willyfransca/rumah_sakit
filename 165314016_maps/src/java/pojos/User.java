@@ -40,5 +40,5 @@ public class User implements java.io.Serializable, Comparable<User> {
     public int compareTo(User user) {
         return this.email.compareTo(user.email);
     }
-
+    
 }
