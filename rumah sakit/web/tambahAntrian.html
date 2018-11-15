@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="background-color:#00BFFF;">
+        <form onsubmit="return make_json(this);" style="border:1px solid #ccc" method="POST">
+            <div class="form-group">
+                <p>
+                    <strong>Pencarian data pasien</strong>
+                    <br>
+                </p>
+
+                <div class="contact-form">
+                    <table>
+                        <tr><td>No Rekam Medis</td> <td>:</td> <td><input type="text" id="nrm"/> <button type="button" onclick="loadDoc()" id="btn">Cari</button></td></tr>
+
+                    </table>
+                    <br/><h2><strong>Hasil Pencarian</strong></h2>
+                    <table width="400px">
+                        <tr><td>Nama</td> <td>:</td><td><input type="text" id="nama" value=""/></td>
+                        <tr><td>NIK</td> <td>:</td><td><input type="text" id="nik" value=""/></td></tr>
+                        <tr><td>Alamat</td> <td>:</td><td><input type="text" id="alamat" value=""/></td></tr>
+                        <tr><td>Tanggal Rawat Jalan</td> <td>:</td><td><input type="Date" id="tanggal" value=""/></td></tr>
+                        <tr><td>Nama Klinik</td> <td>:</td><td>
+                                <select name="klinik" id=namaKlinik>
+                                    <option style="color: black" label="--pilih klinik--"></option>
+                                    <option style="color: black" label="anak">anak</option>
+                                    <option style="color: black" label="mata">mata</option>
+                                    <option style="color: black" label="gigi">gigi</option>
+                                </select>
+                            </td></tr>
+                    </table>
+
+                    <input type="submit" value="Tambah"/>
+                    <pre id="berhasil">
+                    </pre>
+                </div>
+            </div>
+        </form>
+
+        <script>
+            function loadDoc() {
+
+                var url = "http://202.94.83.190:8080/165314016_maps/webresources/Pasien/cariPasien?noRm=" + nrm.value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.send();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var objj = JSON.parse(this.responseText);
+                        document.getElementById("nama").value = objj.nama;
+                        document.getElementById("nik").value = objj.nik;
+                        document.getElementById("alamat").value = objj.alamat;
+                    }
+                };
+            }
+
+
+            function make_json(form) {
+                var json = {
+                    "tanggal": form.tanggal.value,
+                    "noRm": form.nik.value,
+                    "nama": form.nama.value,
+                    "alamat": form.alamat.value,
+                    "namaKlinik": form.namaKlinik.value
+                };
+                var html = JSON.stringify(json, 0, 100);
+
+                var Url = "http://202.94.83.190:8080/165314016_maps/webresources/Antrian/tambahAntrian";
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', Url, false);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(html);
+
+                document.getElementById("berhasil").innerHTML = "Pendaftaran Berhasil";
+                return false;
+            }
+        </script>
+
+    </body>
+</html>
