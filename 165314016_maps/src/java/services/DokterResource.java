@@ -81,6 +81,7 @@ public class DokterResource {
         Dokter dokter = gson.fromJson(data, Dokter.class);
         dokterHelper helper = new dokterHelper();
         helper.addNewDokter(
+                dokter.getId(),
                 dokter.getNama(),
                 dokter.getSpesialis());
 

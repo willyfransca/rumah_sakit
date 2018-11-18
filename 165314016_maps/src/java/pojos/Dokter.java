@@ -13,7 +13,8 @@ public class Dokter implements java.io.Serializable {
     public Dokter() {
     }
 
-    public Dokter(String nama, String spesialis) {
+    public Dokter(Integer id, String nama, String spesialis) {
+        this.id=id;
         this.nama = nama;
         this.spesialis = spesialis;
     }
