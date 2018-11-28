@@ -41,10 +41,10 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="rsku"/>
-  <table-filter match-name="klinik"/>
+  <table-filter match-name="antrian"/>
   <table-filter match-name="location"/>
   <table-filter match-name="dokter"/>
   <table-filter match-name="pasien"/>
-  <table-filter match-name="antrian"/>
   <table-filter match-name="user"/>
+  <table-filter match-name="klinik"/>
 </hibernate-reverse-engineering>

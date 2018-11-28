@@ -1,5 +1,5 @@
 package pojos;
-// Generated Oct 26, 2018 8:57:22 AM by Hibernate Tools 4.3.1
+// Generated 28-Nov-2018 10:19:37 by Hibernate Tools 4.3.1
 
 
 
@@ -47,6 +47,10 @@ public class Klinik  implements java.io.Serializable {
     public void setSpesialis(String spesialis) {
         this.spesialis = spesialis;
     }
+
+
+
+
 }
 
 
